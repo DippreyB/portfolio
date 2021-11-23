@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import {FaReact, FaNode} from 'react-icons/fa'
@@ -16,7 +17,9 @@ export default function Home() {
       </Head>
       <header>
         <nav className={styles.nav}>
-          <a href="/" className={styles.navItem}>DippreyC</a>
+          <Link href='/'>
+          <a className={styles.navItem}>DippreyC</a>
+          </Link>
           <a href='https://github.com/DippreyB' className={styles.navItem}> Github</a>
           <a href='https://www.linkedin.com/in/caine-dipprey-0283a61b7/' className={styles.navItem}> linkedin</a>
           <a href='https://twitter.com/Cainedipp' className={styles.navItem}> twitter</a>

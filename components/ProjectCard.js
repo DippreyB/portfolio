@@ -12,7 +12,7 @@ export default function ProjectCard({title, link, children}) {
                     
                     <h1>
                         {title}
-                        <a href={link} target='_blank'><FiExternalLink/></a>
+                        <a href={link}><FiExternalLink/></a>
                     </h1>
                     
                     <>{children}</>
