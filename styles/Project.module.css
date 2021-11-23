@@ -1,0 +1,42 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: .5em;
+    border: 1px solid white;
+    flex-basis: 300px;
+    aspect-ratio: 1/1;
+    margin-top: 20px;
+}
+
+
+
+.card:hover {
+    border: 1px solid rgb(102, 242, 113);
+    transition: ease-in .25s;
+    color: rgb(102, 242, 113);
+}
+
+.card h1 {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: normal;
+    letter-spacing: .1em;
+}
+.card h1 svg {
+    font-size: 40px;
+}
+.card span {
+    margin-top: -100px;
+}
+
+.card div {
+    font-size: 50px;
+    display: flex;
+    justify-content: flex-end;
+}
+.card div svg {
+    margin-right: .2em;
+}
