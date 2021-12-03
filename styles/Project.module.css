@@ -3,19 +3,13 @@
     flex-direction: column;
     justify-content: space-between;
     padding: .5em;
-    border: 1px solid white;
+    border: 1px solid rgba(0, 0, 0, 0.7);
     flex-basis: 300px;
     aspect-ratio: 1/1;
     margin-top: 20px;
 }
 
 
-
-.card:hover {
-    border: 1px solid rgb(102, 242, 113);
-    transition: ease-in .25s;
-    color: rgb(102, 242, 113);
-}
 
 .card h1 {
     margin: 0;

@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 import {FaReact, FaNode} from 'react-icons/fa'
 import {SiMongodb, SiJavascript, SiNextdotjs, SiCss3, SiJava, SiExpress, SiNodedotjs, SiTailwindcss, SiGithub, SiLinkedin, SiTwitter} from 'react-icons/si'
 import ProjectCard from '../components/ProjectCard'
+import Tech from '../components/Tech'
 
 
 export default function Home() {
@@ -32,15 +33,15 @@ export default function Home() {
             <Image layout='fill' objectFit='cover' src='/portfolioBanner.png'></Image>
            </div>
            <section>
-           <h1 className={styles.sectionTitle}>Hi, I'm Caine </h1>
+           <h1 className={styles.sectionTitle}>Hi, I&apos;m Caine </h1>
            <p className={styles.aboutInfo}>
              Computer Science educator and webmaster at Hebron High School
            </p>
            <p className={styles.aboutInfo}>
-             Aspiring full-stack developer, dad, and strong interpersonal communicator
+             Aspiring full-stack developer looking for new opportunities
            </p>
            <p className={styles.aboutInfo}>
-             <span>Here's a few of my favorite <a href='#technologies'>technologies</a></span>
+             <span>Here&apos;s a few of my favorite <a href='#technologies'>technologies</a></span>
            </p>
            <p className={styles.aboutInfo}>
              <span>and some of my own personal <a href='#projects'>projects</a></span>
@@ -48,53 +49,7 @@ export default function Home() {
            </section>
            
         </section>
-        <section id='technologies' className={styles.section}>
-          
-          <h1 className={styles.sectionTitle}>Technologies</h1>
-          <div className={styles.techFlex}>
-            <div className={styles.techIcon}>
-              <FaReact style={{fontSize: 90}}/>
-              <div>react</div>
-            </div>
-            <div className={styles.techIcon}>
-              <SiMongodb style={{fontSize: 90}}/>
-              <div>mongodb</div>
-            </div>
-            <div className={styles.techIcon}>
-              <FaNode style={{fontSize: 90}}/>
-              <div>node</div>
-            </div>
-            <div className={styles.techIcon}>
-              <SiJavascript style={{fontSize: 90}}/>
-              <div>javascript</div>
-            </div>
-            <div className={styles.techIcon}>
-              <SiNextdotjs style={{fontSize: 90}}/>
-              <div>next</div>
-            </div>
-
-            <div className={styles.techIcon}>
-              <SiCss3 style={{fontSize: 90}}/>
-              <div>css</div>
-            </div>
-            
-            <div className={styles.techIcon}>
-              <SiJava style={{fontSize: 90}}/>
-              <div>java</div>
-            </div>
-
-            <div className={styles.techIcon}>
-              <SiExpress style={{fontSize: 90}}/>
-              <div>express</div>
-            </div>
-
-            <div className={styles.techIcon}>
-              <SiTailwindcss style={{fontSize: 90}}/>
-              <div>tailwind</div>
-            </div>
-            
-          </div>
-        </section>
+        <Tech />
 
         <section id='projects' className={styles.section} >
           <h1 className={styles.sectionTitle}>Projects</h1>
