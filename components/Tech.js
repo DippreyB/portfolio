@@ -49,7 +49,9 @@ const Tech = () => {
             </TechIcon>
             
           </div>
-          <TechProgress value={techValues[activeTech]}/>
+          {activeTech &&
+              <TechProgress value={techValues[activeTech]}/>
+            }
         </section>
     )
 }
