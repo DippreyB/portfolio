@@ -8,10 +8,12 @@ export default NextAuth({
             clientSecret: process.env.SPOTIFY_CLIENT_SECRET
           })
     ],
+    secret: process.env.NEXT_AUTH_SECRET,
     callbacks: {
         async jwt({token, account}) {
             if(account) {
-                token.accessToken = account.refresh_token
+                token.accessToken = account.access_token
+                token.refreshToken = account.refresh_token
             }
             return token
         },
@@ -21,5 +23,3 @@ export default NextAuth({
         }
     }
 })
-
-// https://daily-dev-tips.com/posts/retrieving-a-persons-spotify-playlist-in-nextjs/
