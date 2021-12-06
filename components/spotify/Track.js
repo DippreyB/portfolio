@@ -13,7 +13,7 @@ const Track = ({track, addTrackHandler}) => {
                 </div>
             </div>
             {addTrackHandler &&
-                <button onClick={()=>addTrackHandler(track.id)}>
+                <button onClick={()=>addTrackHandler(track)}>
                     +
                 </button>
             }

@@ -1,5 +1,7 @@
 import NextAuth from 'next-auth'
 import SpotifyProvider from 'next-auth/providers/spotify'
+import { signIn } from 'next-auth/react'
+import connectDB from '../../../config/db'
 
 export default NextAuth({
     providers: [
@@ -21,5 +23,6 @@ export default NextAuth({
             session.user = user
             return session
         }
-    }
+    },
+   
 })

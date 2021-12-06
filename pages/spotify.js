@@ -4,22 +4,44 @@ import axios from "axios";
 import Nav from "../components/Nav";
 import Playlist from "../components/spotify/Playlist";
 import SpotifySearch from "../components/spotify/SpotifySearch";
+import SpotifyUserPanel from "../components/spotify/SpotifyUserPanel";
 
 
 export default function Spotify() {
     const {data: session} = useSession()
     const [playlist, setPlaylist] = useState()
+    const [userTracks, setUserTracks] = useState([])
     
     useEffect(() => {
         const getPlaylists = async () => {
             const {data} = await axios.get('/api/spotify/playlist')
             setPlaylist(data)
         }
+        const getUserTracks = async () => {
+            const {data} = await axios.get('/api/spotify/users')
+            setUserTracks(data.tracks)
+        }
         if(session && session !== null){
             getPlaylists()
+            getUserTracks()
         }
 
     },[session])
+
+
+    const addTrackHandler = async (track) =>{
+        const trackInfo = {
+         trackArtist : track.artists[0].name,
+         trackName : track.name,
+         trackId : track.id,
+         albumArtUrl : track.album.images[0].url,
+        }
+        const {data} = await axios.put('/api/spotify/users', trackInfo)
+        console.log(data)
+        setUserTracks(data)
+    }
+
+    
 
     return (
         <>
@@ -39,7 +61,10 @@ export default function Spotify() {
                     }
                 </section>
                 <section className='max-h-full flex-1 p-3 bg-gray-900'>
-                    <SpotifySearch />
+                    <SpotifySearch addTrackHandler={addTrackHandler}/>
+                </section>
+                <section className='max-h-full flex-1 p-3 bg-gray-900'>
+                    <SpotifyUserPanel userTracks={userTracks}/>
                 </section>
             </main>
         </>

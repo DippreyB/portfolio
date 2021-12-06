@@ -3,6 +3,7 @@ import { getSession } from 'next-auth/react'
 export default async function handler(req, res) {
     
     const session = await getSession({req})
+    session.test = 'test'
     const accessToken = session.token.accessToken
 
     if(req.method === 'GET'){

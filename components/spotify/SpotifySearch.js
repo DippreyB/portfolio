@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Playlist from './Playlist'
 import Track from './Track'
 
-const SpotifySearch = () => {
+const SpotifySearch = ({addTrackHandler}) => {
     const [search, setSearch] = useState()
     const [searchResults, setSearchResults] = useState()
 
@@ -16,9 +16,7 @@ const SpotifySearch = () => {
         getSearchResults()
     },[search])
 
-    const addTrackHandler = (id) =>{
-        console.log(id)
-    }
+    
 
     return (
         <div className='flex flex-col h-screen'>
