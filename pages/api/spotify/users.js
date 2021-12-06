@@ -1,7 +1,8 @@
 import connectDB from '../../../config/db'
 import User from '../../../models/userModel'
+import Track from '../../../models/trackModel'
 import { getSession } from 'next-auth/react'
-import mongoose from 'mongoose'
+
 
 export default async function handler(req,res){
     const {session} = await getSession({req})
@@ -22,11 +23,30 @@ export default async function handler(req,res){
         res.status(200).json(user)
     }
     else if(req.method === 'PUT'){
-        if(user){
-            console.log(req.body)
-            const updatedUser = await user.addTrack(req.body)
-            console.log(updatedUser)
+        const track = await Track.findOne({trackId: req.body.trackId})
+        let createdTrack
+        if(track === null){
+             createdTrack = Track.create({
+                trackId: req.body.trackId,
+                trackArtist: req.body.trackArtist,
+                trackName: req.body.trackName,
+                albumArtUrl: req.body.albumArtUrl,
+                status:'pending',
+                uri: req.body.uri
+            })
+        }
+        if(user && createdTrack){
+            const updatedUser = await user.addTrack({
+                trackId: req.body.trackId,
+                trackArtist: req.body.trackArtist,
+                trackName: req.body.trackName,
+                albumArtUrl: req.body.albumArtUrl,
+                uri: req.body.uri
+            })
             res.status(200).json(updatedUser.tracks)
+        }
+        else{
+            res.status(400).json({error: 'Unable to request track'})
         }
     }
     else

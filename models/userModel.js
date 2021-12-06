@@ -1,9 +1,11 @@
 import mongoose from 'mongoose'
 
+
 const trackSchema = mongoose.Schema({
     trackId: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
     trackName: {
         type: String,
@@ -20,17 +22,20 @@ const trackSchema = mongoose.Schema({
     status: { 
         type: String,
         enum: ['pending', 'accepted', 'rejected']
+    },
+    uri: { 
+        type: String,
+        required: true
     }
 })
+
 
 const userSchema = mongoose.Schema({
     name: { 
             type: String,
-            
     },
     email: {
         type: String,
-
         unique: true,
     },
     isAdmin: {
@@ -43,7 +48,7 @@ const userSchema = mongoose.Schema({
 
 
 userSchema.methods.addTrack = function(newTrack) {
-    
+    console.log(newTrack)
     const foundTrack = this.tracks.find(track => track.trackId === newTrack.trackId)
     if(foundTrack === undefined)
         this.tracks.push({
@@ -51,6 +56,7 @@ userSchema.methods.addTrack = function(newTrack) {
             trackName: newTrack.trackName,
             trackArtist: newTrack.trackArtist,
             albumArtUrl: newTrack.albumArtUrl,
+            uri: newTrack.uri,
             status: 'pending'
         })
     return this.save()

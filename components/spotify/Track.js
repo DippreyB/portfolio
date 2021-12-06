@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Track = ({track, addTrackHandler}) => {
+const Track = ({track, addTrackHandler, acceptTrackHandler, rejectTrackHandler}) => {
 
     return (
         <div className='flex justify-between bg-gray-800 text-white p-3' >
@@ -16,6 +16,13 @@ const Track = ({track, addTrackHandler}) => {
                 <button onClick={()=>addTrackHandler(track)}>
                     +
                 </button>
+            }
+
+            {acceptTrackHandler &&
+                <button onClick={()=>acceptTrackHandler(track)}>accept</button>
+            }
+            {rejectTrackHandler &&
+                <button onClick={()=>rejectTrackHandler(track)}>reject</button>
             }
 
 

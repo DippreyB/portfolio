@@ -5,6 +5,7 @@ import Nav from "../components/Nav";
 import Playlist from "../components/spotify/Playlist";
 import SpotifySearch from "../components/spotify/SpotifySearch";
 import SpotifyUserPanel from "../components/spotify/SpotifyUserPanel";
+import SpotifyAdminPanel from "../components/spotify/SpotifyAdminPanel";
 
 
 export default function Spotify() {
@@ -35,9 +36,10 @@ export default function Spotify() {
          trackName : track.name,
          trackId : track.id,
          albumArtUrl : track.album.images[0].url,
+         uri: track.uri
         }
         const {data} = await axios.put('/api/spotify/users', trackInfo)
-        console.log(data)
+        
         setUserTracks(data)
     }
 
@@ -65,6 +67,9 @@ export default function Spotify() {
                 </section>
                 <section className='max-h-full flex-1 p-3 bg-gray-900'>
                     <SpotifyUserPanel userTracks={userTracks}/>
+                </section>
+                <section className='max-h-full flex-1 p-3 bg-gray-900'>
+                    <SpotifyAdminPanel />
                 </section>
             </main>
         </>

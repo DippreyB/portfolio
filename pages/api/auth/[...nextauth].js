@@ -2,6 +2,7 @@ import NextAuth from 'next-auth'
 import SpotifyProvider from 'next-auth/providers/spotify'
 import { signIn } from 'next-auth/react'
 import connectDB from '../../../config/db'
+import User from '../../../models/userModel'
 
 export default NextAuth({
     providers: [
