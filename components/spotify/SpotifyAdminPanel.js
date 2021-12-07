@@ -21,7 +21,9 @@ const SpotifyAdminPanel = () => {
         const {data} = await axios.put('/api/spotify/admin/tracks',{trackId: track.trackId, status: "accepted"})
     }
     const rejectTrackHandler = async (track) => {
+        console.log(track)
         const {data} = await axios.put('/api/spotify/admin/tracks',{trackId: track.trackId, status: "rejected"})
+        
     }
     
     return (
@@ -31,14 +33,16 @@ const SpotifyAdminPanel = () => {
                 {requestedTracks &&
                     <div className='flex flex-col mt-3 scrollbar-thin scrollbar-thumb-gray-600'>
                         {requestedTracks.map(track=>{
-                            console.log(track)
+                            
                             if(track.status === 'pending')
                             return (
                                 // this is bad. Need to make a formal sturcture for all track objects that matches db fields.
+                                //consider making a helper method to normalize tracks
                                 <Track track={{
                                     album:{
                                         images:[{url:track.albumArtUrl}],
                                     },
+                                    trackId: track.trackId,
                                     name: track.trackName,
                                     artists:[{name: track.trackArtist}],
                                     status: track.status,

@@ -9,6 +9,7 @@ export default async function handler(req,res){
     const {name, email} = session.user
     await connectDB()
     const user = await User.findOne({email: email})
+
     
     if(req.method === "GET"){
         if(user === null){
@@ -23,6 +24,7 @@ export default async function handler(req,res){
         res.status(200).json(user)
     }
     else if(req.method === 'PUT'){
+        
         const track = await Track.findOne({trackId: req.body.trackId})
         let createdTrack
         if(track === null){

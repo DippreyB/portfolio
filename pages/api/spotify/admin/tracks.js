@@ -1,11 +1,16 @@
+import { getToken } from "next-auth/jwt";
 import { getSession } from "next-auth/react";
+import axios from 'axios'
 import Track from "../../../../models/trackModel";
 import User from '../../../../models/userModel'
 
 export default async function handler(req,res){
     const {session} = await getSession({req})
-    const {user,token} = session
+    const {user} = session
 
+    const secret = process.env.NEXT_AUTH_SECRET
+    const token = await getToken({req, secret})
+    
     const {isAdmin} = await User.findOne({email: user.email})
     if(!isAdmin){
         req.status(401).json({error: 'Not authorized.'})
@@ -16,7 +21,7 @@ export default async function handler(req,res){
         res.status(200).json(tracks)
     }
     if(req.method === 'PUT'){
-        const track = await Track.findOne(req.body.trackId)
+        const track = await Track.findOne({trackId: req.body.trackId})
         track.status = req.body.status
 
         //if status === accepted => make req to spotify api
@@ -28,19 +33,35 @@ export default async function handler(req,res){
                     'Content-Type': 'application/json'
                 }
             }   
-            const res = await axios.post(`https://api.spotify.com/v1/playlists/${playlistId}/tracks/`,{"uris": [track.uri]})
+            const res = await axios.post(`https://api.spotify.com/v1/playlists/${playlistId}/tracks/`,{"uris": [track.uri]}, config)
+            track.save()
+            
         }
-        track.save()
-
+        
+       
         //iterate through all users. find users that contain track id and update with new status
         const users = await User.find()
         users.map(user => {
-            const userTrack = user.tracks.findOne({trackId: track.trackId})
+            const userTrack = user.tracks.find(userTrack => track.trackId === userTrack.trackId)
+            
             if(userTrack !== null)
                 userTrack.status = track.status
+
+            user.save()
         })
 
-        res.status(200).json(track)
+        if(track.status ==='rejected'){
+            res.status(200).json(track)
+            track.remove()
+        }
+        if(track.status === 'accepted'){
+            res.status(200).json(track)
+        }
+
+        res.status(400).json({error:"Admin unable to change track status"})
+        
+
+        
     }
     
 }

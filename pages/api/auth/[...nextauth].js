@@ -7,6 +7,7 @@ import User from '../../../models/userModel'
 export default NextAuth({
     providers: [
         SpotifyProvider({
+            authorization: {params: {scope:'user-read-email playlist-modify-public playlist-modify-private'}},
             clientId: process.env.SPOTIFY_CLIENT_ID,
             clientSecret: process.env.SPOTIFY_CLIENT_SECRET
           })

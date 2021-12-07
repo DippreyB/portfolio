@@ -31,16 +31,18 @@ export default function Spotify() {
 
 
     const addTrackHandler = async (track) =>{
-        const trackInfo = {
-         trackArtist : track.artists[0].name,
-         trackName : track.name,
-         trackId : track.id,
-         albumArtUrl : track.album.images[0].url,
-         uri: track.uri
+        if(!userTracks.find(userTrack => userTrack.trackId === track.id)){
+            const trackInfo = {
+            trackArtist : track.artists[0].name,
+            trackName : track.name,
+            trackId : track.id,
+            albumArtUrl : track.album.images[0].url,
+            uri: track.uri
+            }
+            const {data} = await axios.put('/api/spotify/users', trackInfo)
+            
+            setUserTracks(data)
         }
-        const {data} = await axios.put('/api/spotify/users', trackInfo)
-        
-        setUserTracks(data)
     }
 
     

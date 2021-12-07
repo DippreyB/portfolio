@@ -9,7 +9,7 @@ const Playlist = ({items}) => {
             {items.map(item => {
                 const {track} = item
                 return (
-                    <Track key={track.id} track={track}/>
+                    <Track key={`playlist-${track.id}`} track={track}/>
                 )
             })}
             
