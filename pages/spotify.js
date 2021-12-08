@@ -67,7 +67,7 @@ export default function Spotify() {
             {warning &&
                 <Warning warning={warning} setWarning={setWarning}/>
             }
-            {!user &&
+            {!user && !session &&
                 
                     <section className='grid grid-cols-1 h-screen justify-center'>
                        <div className='text-white m-auto flex flex-col'> 
@@ -84,7 +84,10 @@ export default function Spotify() {
                     </section>
                     
                 }
-            
+            {session && !user &&
+                <svg className='animate-spin h-52 w-52'></svg>
+            }
+        
                 {user &&
                 <section className='flex flex-1 flex-wrap md:justify-start justify-center max-h-full md:max-h-screen pt-10 bg-gray-900'>
                     <>
