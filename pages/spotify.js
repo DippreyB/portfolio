@@ -7,6 +7,7 @@ import SpotifySearch from "../components/spotify/SpotifySearch";
 import SpotifyUserPanel from "../components/spotify/SpotifyUserPanel";
 import SpotifyAdminPanel from "../components/spotify/SpotifyAdminPanel";
 import Warning from "../components/Warning";
+import {FaSpotify} from 'react-icons/fa'
 
 
 export default function Spotify() {
@@ -55,7 +56,7 @@ export default function Spotify() {
     
 
     return (
-        <>
+        <main className='bg-gray-900 h-screen'>
             <Nav dark={true}>
             {session === null?
                     <a onClick={() => signIn()} >Sign In</a> 
@@ -66,8 +67,26 @@ export default function Spotify() {
             {warning &&
                 <Warning warning={warning} setWarning={setWarning}/>
             }
-            <main className='flex flex-wrap md:justify-start justify-center max-h-full md:max-h-screen pt-10 bg-gray-900'>
+            {!user &&
+                
+                    <section className='grid grid-cols-1 h-screen justify-center'>
+                       <div className='text-white m-auto flex flex-col'> 
+                            <div>I need more music... help me? </div>
+                            <button onClick={signIn} className='border border-white rounded p-5 mt-3 hover:border-green-500 hover:text-green-500'>
+                                <div className='flex items-center justify-between'>
+                                    <div>Log in with Spotify</div>
+                                    <div className='text-4xl ml-5'>
+                                        <FaSpotify/>
+                                    </div>
+                                </div>
+                            </button>
+                       </div>
+                    </section>
+                    
+                }
+            
                 {user &&
+                <section className='flex flex-1 flex-wrap md:justify-start justify-center max-h-full md:max-h-screen pt-10 bg-gray-900'>
                     <>
                     <section className='max-h-full flex-1 p-3 bg-gray-900'>
                         {playlist &&
@@ -91,8 +110,9 @@ export default function Spotify() {
                     
                     
                     </>
+                    </section>
                 }
-            </main>
-        </>
+            
+        </main>
     )
 }
