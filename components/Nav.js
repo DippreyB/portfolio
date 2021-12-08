@@ -2,9 +2,9 @@ import React from 'react'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 
-const Nav = () => {
+const Nav = ({children, dark}) => {
     return (
-        <nav className={styles.nav}>
+        <nav className={dark ? styles.navDark :styles.nav}>
           <Link href='/'>
           <a className={styles.navItem}>DippreyC</a>
           </Link>
@@ -14,6 +14,7 @@ const Nav = () => {
           <Link href='/spotify'>
             <a className={styles.navItem}>spotify</a>
           </Link>
+          {children}
       </nav>
     )
 }

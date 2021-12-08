@@ -6,12 +6,15 @@ import Playlist from "../components/spotify/Playlist";
 import SpotifySearch from "../components/spotify/SpotifySearch";
 import SpotifyUserPanel from "../components/spotify/SpotifyUserPanel";
 import SpotifyAdminPanel from "../components/spotify/SpotifyAdminPanel";
+import Warning from "../components/Warning";
 
 
 export default function Spotify() {
     const {data: session} = useSession()
     const [playlist, setPlaylist] = useState()
     const [userTracks, setUserTracks] = useState([])
+    const [warning, setWarning] = useState()
+    const [user, setUser] = useState()
     
     useEffect(() => {
         const getPlaylists = async () => {
@@ -21,6 +24,7 @@ export default function Spotify() {
         const getUserTracks = async () => {
             const {data} = await axios.get('/api/spotify/users')
             setUserTracks(data.tracks)
+            setUser(data)
         }
         if(session && session !== null){
             getPlaylists()
@@ -29,7 +33,7 @@ export default function Spotify() {
 
     },[session])
 
-
+    console.log(user)
     const addTrackHandler = async (track) =>{
         if(!userTracks.find(userTrack => userTrack.trackId === track.id)){
             const trackInfo = {
@@ -43,36 +47,51 @@ export default function Spotify() {
             
             setUserTracks(data)
         }
+        else{
+            setWarning('Tracks cannot be suggested more than once!')
+        }
     }
 
     
 
     return (
         <>
-            <Nav/>
-            <div className='container flex justify-end items-center mt-10'>
-                {session === null?
-                    <button onClick={() => signIn()} >Sign In</button> 
+            <Nav dark={true}>
+            {session === null?
+                    <a onClick={() => signIn()} >Sign In</a> 
                     :
-                    <button onClick={()=> signOut()} >Sign Out</button>
+                    <a  onClick={()=> signOut()} >Sign Out</a>
                 }
-                    
-            </div>
-            <main className='flex flex-wrap md:justify-start justify-center max-h-full md:max-h-screen'>
-                <section className='max-h-full flex-1 p-3 bg-gray-900'>
-                    {playlist &&
-                        <Playlist items={playlist.tracks.items}/>
+            </Nav>
+            {warning &&
+                <Warning warning={warning} setWarning={setWarning}/>
+            }
+            <main className='flex flex-wrap md:justify-start justify-center max-h-full md:max-h-screen pt-10 bg-gray-900'>
+                {user &&
+                    <>
+                    <section className='max-h-full flex-1 p-3 bg-gray-900'>
+                        {playlist &&
+                            <Playlist items={playlist.tracks.items}/>
+                        }
+                    </section>
+                    <section className='max-h-full flex-1 p-3 bg-gray-900'>
+                        <SpotifySearch addTrackHandler={addTrackHandler}/>
+                    </section>
+                    {user.isAdmin ? 
+                        <section className='max-h-full flex-1 p-3 bg-gray-900'>
+                            <SpotifyAdminPanel />
+                            {/* TODO - Create panel to show all accepted songs in databasemaybe a panel to view all users */}
+                        </section>
+                        
+                        :
+                        <section className='max-h-full flex-1 p-3 bg-gray-900'>
+                            <SpotifyUserPanel userTracks={userTracks}/>
+                        </section>
                     }
-                </section>
-                <section className='max-h-full flex-1 p-3 bg-gray-900'>
-                    <SpotifySearch addTrackHandler={addTrackHandler}/>
-                </section>
-                <section className='max-h-full flex-1 p-3 bg-gray-900'>
-                    <SpotifyUserPanel userTracks={userTracks}/>
-                </section>
-                <section className='max-h-full flex-1 p-3 bg-gray-900'>
-                    <SpotifyAdminPanel />
-                </section>
+                    
+                    
+                    </>
+                }
             </main>
         </>
     )

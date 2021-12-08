@@ -19,7 +19,7 @@ const SpotifySearch = ({addTrackHandler}) => {
     
 
     return (
-        <div className='flex flex-col h-screen'>
+        <div className='flex flex-col h-full max-h-screen'>
             <div className='p-5 text-4xl text-white'><h1>Suggest a track</h1></div>
             <input 
                     type='text' 
