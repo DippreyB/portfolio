@@ -40,8 +40,8 @@ const Track = ({track, addTrackHandler, acceptTrackHandler, rejectTrackHandler})
                 
             </div>
             {addTrackHandler &&
-                <button onClick={()=>addTrackHandler(track)}>
-                    +
+                <button className='self-center hover:text-green-500 p-2 flex flex-col justify-center' onClick={()=>addTrackHandler(track)}>
+                    <span className='text-3xl  '>+</span>
                 </button>
             }
 
