@@ -6,7 +6,7 @@ import Playlist from "../components/spotify/Playlist";
 import SpotifySearch from "../components/spotify/SpotifySearch";
 import SpotifyUserPanel from "../components/spotify/SpotifyUserPanel";
 import SpotifyAdminPanel from "../components/spotify/SpotifyAdminPanel";
-import Warning from "../components/Warning";
+import Message from "../components/Message";
 import {FaSpotify} from 'react-icons/fa'
 
 
@@ -14,7 +14,7 @@ export default function Spotify() {
     const {data: session} = useSession()
     const [playlist, setPlaylist] = useState()
     const [userTracks, setUserTracks] = useState([])
-    const [warning, setWarning] = useState()
+    const [message, setMessage] = useState()
     const [user, setUser] = useState()
     
     useEffect(() => {
@@ -35,7 +35,7 @@ export default function Spotify() {
     },[session])
 
     console.log(user)
-    const addTrackHandler = async (track) =>{
+    const requestTrackHandler = async (track) =>{
         if(!userTracks.find(userTrack => userTrack.trackId === track.id)){
             const trackInfo = {
             trackArtist : track.artists[0].name,
@@ -47,9 +47,18 @@ export default function Spotify() {
             const {data} = await axios.put('/api/spotify/users', trackInfo)
             
             setUserTracks(data)
+            if(data){
+                setMessage({
+                    text: `${trackInfo.trackName} successfully requested!`,
+                    type: 'success'
+                })
+            }
         }
         else{
-            setWarning('Tracks cannot be suggested more than once!')
+            setMessage({
+                text: 'Tracks cannot be suggested more than once!',
+                type: 'error'
+            })
         }
     }
 
@@ -64,8 +73,8 @@ export default function Spotify() {
                     <a  onClick={()=> signOut()} >Sign Out</a>
                 }
             </Nav>
-            {warning &&
-                <Warning warning={warning} setWarning={setWarning}/>
+            {message &&
+                <Message message={message} setMessage={setMessage}/>
             }
             {!user && !session &&
                 
@@ -97,11 +106,11 @@ export default function Spotify() {
                         }
                     </section>
                     <section className='max-h-full flex-1 p-3 bg-gray-900'>
-                        <SpotifySearch addTrackHandler={addTrackHandler}/>
+                        <SpotifySearch requestTrackHandler={requestTrackHandler}/>
                     </section>
                     {user.isAdmin ? 
                         <section className='max-h-full flex-1 p-3 bg-gray-900'>
-                            <SpotifyAdminPanel />
+                            <SpotifyAdminPanel setMessage={setMessage}/>
                             {/* TODO - Create panel to show all accepted songs in databasemaybe a panel to view all users */}
                         </section>
                         

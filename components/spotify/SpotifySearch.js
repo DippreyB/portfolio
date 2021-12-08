@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Playlist from './Playlist'
 import Track from './Track'
 
-const SpotifySearch = ({addTrackHandler}) => {
+const SpotifySearch = ({requestTrackHandler}) => {
     const [search, setSearch] = useState()
     const [searchResults, setSearchResults] = useState()
 
@@ -33,7 +33,7 @@ const SpotifySearch = ({addTrackHandler}) => {
                     <div className='flex flex-col mt-3 scrollbar-thin scrollbar-thumb-gray-600'>
                         {searchResults.tracks.items.map(track=>{
                             return (
-                                <Track addTrackHandler={addTrackHandler} track={track} key={track.id} >
+                                <Track requestTrackHandler={requestTrackHandler} track={track} key={track.id} >
                                     
                                 </Track>
                             )

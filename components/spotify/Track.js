@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Track = ({track, addTrackHandler, acceptTrackHandler, rejectTrackHandler}) => {
+const Track = ({track, requestTrackHandler, acceptTrackHandler, rejectTrackHandler}) => {
     let textColor 
     if(track.status === undefined)
         textColor = 'text-white'
@@ -39,8 +39,8 @@ const Track = ({track, addTrackHandler, acceptTrackHandler, rejectTrackHandler})
                 }
                 
             </div>
-            {addTrackHandler &&
-                <button className='self-center hover:text-green-500 p-2 flex flex-col justify-center' onClick={()=>addTrackHandler(track)}>
+            {requestTrackHandler &&
+                <button className='self-center hover:text-green-500 p-2 flex flex-col justify-center' onClick={()=>requestTrackHandler(track)}>
                     <span className='text-3xl  '>+</span>
                 </button>
             }

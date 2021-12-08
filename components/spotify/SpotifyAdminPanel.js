@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react'
 
 
-const SpotifyAdminPanel = () => {
+const SpotifyAdminPanel = ({setMessage}) => {
     const {data: session} = useSession()
     const [requestedTracks, setRequestedTracks] = useState()
 
@@ -19,11 +19,18 @@ const SpotifyAdminPanel = () => {
 
     const acceptTrackHandler = async (track) => {
         const {data} = await axios.put('/api/spotify/admin/tracks',{trackId: track.trackId, status: "accepted"})
+        if(data)
+        setMessage({
+            text: 'Track accepted.',
+            type: 'success'
+        })
     }
     const rejectTrackHandler = async (track) => {
-        console.log(track)
         const {data} = await axios.put('/api/spotify/admin/tracks',{trackId: track.trackId, status: "rejected"})
-        
+        setMessage({
+            text: 'Track rejected.',
+            type: 'success'
+        })
     }
     
     return (

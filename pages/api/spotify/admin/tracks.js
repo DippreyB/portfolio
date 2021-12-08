@@ -44,7 +44,7 @@ export default async function handler(req,res){
         users.map(user => {
             const userTrack = user.tracks.find(userTrack => track.trackId === userTrack.trackId)
             
-            if(userTrack !== null)
+            if(userTrack && userTrack !== null)
                 userTrack.status = track.status
 
             user.save()
@@ -58,7 +58,6 @@ export default async function handler(req,res){
             res.status(200).json(track)
         }
 
-        res.status(400).json({error:"Admin unable to change track status"})
         
 
         
