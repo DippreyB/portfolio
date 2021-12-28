@@ -27,16 +27,16 @@ export default function Spotify() {
             setUserTracks(data.tracks)
             setUser(data)
         }
+        getPlaylists()
         if(session && session !== null){
-            getPlaylists()
             getUserTracks()
         }
 
     },[session])
 
-    console.log(user)
+    
     const requestTrackHandler = async (track) =>{
-        if(!userTracks.find(userTrack => userTrack.trackId === track.id)){
+            
             const trackInfo = {
             trackArtist : track.artists[0].name,
             trackName : track.name,
@@ -44,22 +44,23 @@ export default function Spotify() {
             albumArtUrl : track.album.images[0].url,
             uri: track.uri
             }
-            const {data} = await axios.put('/api/spotify/users', trackInfo)
-            
-            setUserTracks(data)
-            if(data){
-                setMessage({
-                    text: `${trackInfo.trackName} successfully requested!`,
-                    type: 'success'
-                })
+            try{
+                const {data} = await axios.put('/api/spotify/users', trackInfo)
+                
+                setUserTracks(data)
+                if(data){
+                    setMessage({
+                        text: `${trackInfo.trackName} successfully requested!`,
+                        type: 'success'
+                    })
+                }
+            }catch(error){
+               console.log(error.response.data.message)
+               setMessage({text: error.response.data.message, type: 'error'})
             }
-        }
-        else{
-            setMessage({
-                text: 'Tracks cannot be suggested more than once!',
-                type: 'error'
-            })
-        }
+            
+            
+        
     }
 
     
@@ -76,28 +77,10 @@ export default function Spotify() {
             {message &&
                 <Message message={message} setMessage={setMessage}/>
             }
-            {!user && !session &&
+              
                 
-                    <section className='grid grid-cols-1 h-screen justify-center'>
-                       <div className='text-white m-auto flex flex-col'> 
-                            <div>I need more music... help me? </div>
-                            <button onClick={signIn} className='border border-white rounded p-5 mt-3 hover:border-green-500 hover:text-green-500'>
-                                <div className='flex items-center justify-between'>
-                                    <div>Log in with Spotify</div>
-                                    <div className='text-4xl ml-5'>
-                                        <FaSpotify/>
-                                    </div>
-                                </div>
-                            </button>
-                       </div>
-                    </section>
-                    
-                }
-            {session && !user &&
-                <svg className='animate-spin h-52 w-52'></svg>
-            }
         
-                {user &&
+               
                 <section className='flex flex-1 flex-wrap md:justify-start justify-center max-h-full md:max-h-screen pt-10 bg-gray-900'>
                     <>
                     <section className='max-h-full flex-1 p-3 bg-gray-900'>
@@ -108,22 +91,25 @@ export default function Spotify() {
                     <section className='max-h-full flex-1 p-3 bg-gray-900'>
                         <SpotifySearch requestTrackHandler={requestTrackHandler}/>
                     </section>
-                    {user.isAdmin ? 
+                    {user &&
+                    user.isAdmin && 
                         <section className='max-h-full flex-1 p-3 bg-gray-900'>
                             <SpotifyAdminPanel setMessage={setMessage}/>
                             {/* TODO - Create panel to show all accepted songs in databasemaybe a panel to view all users */}
                         </section>
                         
-                        :
+                    }
+                    {user && !user.isAdmin &&
                         <section className='max-h-full flex-1 p-3 bg-gray-900'>
                             <SpotifyUserPanel userTracks={userTracks}/>
                         </section>
                     }
                     
                     
+                    
                     </>
                     </section>
-                }
+                
             
         </main>
     )

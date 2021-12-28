@@ -17,8 +17,14 @@ const SpotifyAdminPanel = ({setMessage}) => {
             getRequestedTracks()
     },[session])
 
+    const updateRequestedTracks = async () =>{
+        const {data} = await axios.get('/api/spotify/admin/tracks')
+        setRequestedTracks(data)
+    }
+
     const acceptTrackHandler = async (track) => {
         const {data} = await axios.put('/api/spotify/admin/tracks',{trackId: track.trackId, status: "accepted"})
+        await updateRequestedTracks()
         if(data)
         setMessage({
             text: 'Track accepted.',
@@ -27,6 +33,7 @@ const SpotifyAdminPanel = ({setMessage}) => {
     }
     const rejectTrackHandler = async (track) => {
         const {data} = await axios.put('/api/spotify/admin/tracks',{trackId: track.trackId, status: "rejected"})
+        await updateRequestedTracks()
         setMessage({
             text: 'Track rejected.',
             type: 'success'

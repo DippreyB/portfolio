@@ -1,8 +1,7 @@
 import NextAuth from 'next-auth'
 import SpotifyProvider from 'next-auth/providers/spotify'
 import { signIn } from 'next-auth/react'
-import connectDB from '../../../config/db'
-import User from '../../../models/userModel'
+
 
 export default NextAuth({
     providers: [
@@ -15,6 +14,7 @@ export default NextAuth({
     secret: process.env.NEXT_AUTH_SECRET,
     callbacks: {
         async jwt({token, account}) {
+        
             if(account) {
                 token.accessToken = account.access_token
                 token.refreshToken = account.refresh_token
