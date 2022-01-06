@@ -13,11 +13,13 @@ const SpotifySearch = ({requestTrackHandler}) => {
             setSearchResults(data)
         }
         if(search)
-        getSearchResults()
+            getSearchResults()
+        if(search.length == 0)
+            setSearchResults(undefined)
     },[search])
 
     
-
+   
     return (
         <div className='flex flex-col h-full max-h-screen'>
             <div className='p-5 text-4xl text-white'><h1>Suggest a track</h1></div>

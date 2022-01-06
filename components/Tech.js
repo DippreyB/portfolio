@@ -4,7 +4,7 @@ import {SiMongodb, SiJavascript, SiNextdotjs, SiCss3, SiJava, SiExpress, SiNoded
 import {FaReact, FaNode} from 'react-icons/fa'
 
 const Tech = () => {
-    const [activeTech, setActiveTech] = useState()
+    const [activeTech, setActiveTech] = useState('default')
     
     return (
         <section id='technologies' className={styles.section}>
@@ -58,23 +58,44 @@ const Tech = () => {
 
 const TechIcon = ({children, id, setActive, activeTech}) => {
     return (
+        
         <div onClick={()=>setActive(id)} className={id===activeTech ? styles.activeTech : styles.techIcon}>
               {children}
               <div>{id}</div>
-            </div>
+              {id === activeTech &&
+                <div className='flex justify-center'>{techValues[id]}</div>
+                }
+        </div>
+        
+        
     )
 }
 
 const TechProgress = ({value}) => {
 
     return (
-        <div style={{width:'100%', height: '20px', backgroundColor: '#fff', borderRadius: '10px', marginTop:'20px' }}>
-            <div style={{width: `${value}%`,height: '100%', backgroundColor: 'rgba(0,0,0,0.7)', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px', transition:'.25s'}}></div>
-        </div>
+        
+            <div style={{width: `${value}%`,
+                height: '30px', 
+                marginTop:'20px',  
+                backgroundColor: 'rgba(0,0,0,0.7)', 
+                borderRadius: '10px', 
+                transition:'.25s', 
+                display: 'flex', 
+                justifyContent:'flex-end', 
+                paddingRight: '10px',
+                color: '#fff',
+                }}
+            >
+
+                {value} / 100
+            </div>
+       
     )
 }
 
 const techValues = {
+    'default': 0,
     'react': 70,
     'mongodb':50,
     'node': 70,

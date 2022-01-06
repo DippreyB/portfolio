@@ -28,11 +28,9 @@ export default function Home() {
            <section>
            <h1 className={styles.sectionTitle}>Hi, I&apos;m Caine </h1>
            <p className={styles.aboutInfo}>
-             Computer Science educator and webmaster at Hebron High School
+             AP Computer Science teacher and webmaster at Hebron High School
            </p>
-           <p className={styles.aboutInfo}>
-             Aspiring full-stack developer looking for new opportunities
-           </p>
+           
            <p className={styles.aboutInfo}>
              <span>Here&apos;s a few of my favorite <a href='#technologies'>technologies</a></span>
            </p>
