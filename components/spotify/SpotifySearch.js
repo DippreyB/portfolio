@@ -14,7 +14,7 @@ const SpotifySearch = ({requestTrackHandler}) => {
         }
         if(search)
             getSearchResults()
-        if(search.length == 0)
+        if(search && search.length == 0)
             setSearchResults(undefined)
     },[search])
 
