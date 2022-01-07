@@ -7,9 +7,10 @@ import {SiMongodb, SiJavascript, SiNextdotjs, SiCss3, SiJava, SiExpress, SiNoded
 import ProjectCard from '../components/ProjectCard'
 import Tech from '../components/Tech'
 import Nav from '../components/Nav'
+import withTransition from '../components/HOC/withTransition'
 
 
-export default function Home() {
+function Home() {
   return (
     <div className={styles.container}>
       <Head>
@@ -94,3 +95,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default withTransition(Home)

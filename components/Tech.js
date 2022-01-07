@@ -49,9 +49,7 @@ const Tech = () => {
             </TechIcon>
             
           </div>
-          {activeTech &&
-              <TechProgress value={techValues[activeTech]}/>
-            }
+          
         </section>
     )
 }
@@ -63,7 +61,7 @@ const TechIcon = ({children, id, setActive, activeTech}) => {
               {children}
               <div>{id}</div>
               {id === activeTech &&
-                <div className='flex justify-center'>{techValues[id]}</div>
+                <div className='flex justify-center'>{techValues[id] + `%`}</div>
                 }
         </div>
         
@@ -88,7 +86,7 @@ const TechProgress = ({value}) => {
                 }}
             >
 
-                {value} / 100
+                {value > 0 && `${value} / 100` }
             </div>
        
     )
