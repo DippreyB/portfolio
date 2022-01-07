@@ -122,4 +122,4 @@ function Spotify() {
     )
 }
 
-export default withTransition(Spotify)
+export default Spotify = withTransition(Spotify)

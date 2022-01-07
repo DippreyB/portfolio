@@ -96,4 +96,4 @@ function Home() {
   )
 }
 
-export default withTransition(Home)
+export default Home = withTransition(Home)
