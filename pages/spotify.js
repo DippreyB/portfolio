@@ -10,6 +10,7 @@ import Message from "../components/Message";
 import {FaSpotify} from 'react-icons/fa'
 import withTransition from "../components/HOC/withTransition";
 import Tabs from "../components/spotify/Tabs";
+import {motion} from 'framer-motion';
 
 
 function Spotify() {
@@ -118,8 +119,22 @@ function Spotify() {
                 
             </main>
         }
+            <motion.div
+                className='slide-in-spotify'
+                initial={{scaleX: 0}}
+                animate={{scaleX: 0}}
+                exit={{scaleX: 1}}
+                transition={{duration: 1, ease: "easeInOut"}}
+            />
+            <motion.div
+                className='slide-out-spotify'
+                initial={{scaleX: 1}}
+                animate={{scaleX: 0}}
+                exit={{scaleX: 0}}
+                transition={{duration: 1, ease: "easeInOut"}}
+            />
         </>
     )
 }
 
-export default Spotify = withTransition(Spotify)
+export default Spotify

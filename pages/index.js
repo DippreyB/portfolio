@@ -8,10 +8,11 @@ import ProjectCard from '../components/ProjectCard'
 import Tech from '../components/Tech'
 import Nav from '../components/Nav'
 import withTransition from '../components/HOC/withTransition'
-
+import {motion} from 'framer-motion'
 
 function Home() {
   return (
+    <>
     <div className={styles.container}>
       <Head>
         <title>DippreyC</title>
@@ -93,7 +94,23 @@ function Home() {
      
       
     </div>
+
+    <motion.div
+                className='slide-in'
+                initial={{scaleX: 0}}
+                animate={{scaleX: 0}}
+                exit={{scaleX: 1}}
+                transition={{duration: 1, ease: "easeInOut"}}
+            />
+            <motion.div
+                className='slide-out'
+                initial={{scaleX: 1}}
+                animate={{scaleX: 0}}
+                exit={{scaleX: 0}}
+                transition={{duration: 1, ease: "easeInOut"}}
+            />
+    </>
   )
 }
 
-export default Home = withTransition(Home)
+export default Home

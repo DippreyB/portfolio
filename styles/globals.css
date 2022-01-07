@@ -30,7 +30,7 @@ a:hover {
   left: 0;
   height: 100vh;
   width: 100%;
-  background: #838586;
+  background: #ccc;
   transform-origin: left;
 }
 
@@ -40,6 +40,26 @@ a:hover {
   left: 0;
   height: 100vh;
   width: 100%;
-  background: #585f64;
+  background: rgba(17, 24, 39, 1);
+  transform-origin: right;
+}
+
+.slide-in-spotify {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: rgba(17, 24, 39, 1);
+  transform-origin: left;
+}
+
+.slide-out-spotify {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: #ccc;
   transform-origin: right;
 }
