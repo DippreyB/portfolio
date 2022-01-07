@@ -7,7 +7,6 @@ import {SiMongodb, SiJavascript, SiNextdotjs, SiCss3, SiJava, SiExpress, SiNoded
 import ProjectCard from '../components/ProjectCard'
 import Tech from '../components/Tech'
 import Nav from '../components/Nav'
-import withTransition from '../components/HOC/withTransition'
 import {motion} from 'framer-motion'
 
 function Home() {

@@ -8,7 +8,6 @@ import SpotifyUserPanel from "../components/spotify/SpotifyUserPanel";
 import SpotifyAdminPanel from "../components/spotify/SpotifyAdminPanel";
 import Message from "../components/Message";
 import {FaSpotify} from 'react-icons/fa'
-import withTransition from "../components/HOC/withTransition";
 import Tabs from "../components/spotify/Tabs";
 import {motion} from 'framer-motion';
 
