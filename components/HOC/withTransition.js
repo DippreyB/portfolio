@@ -22,5 +22,5 @@ const withTransition = (Component) => {
         </>
     )
 }
-
+withTransition.displayName = 'withTransition'
 export default withTransition
