@@ -30,20 +30,22 @@ export default async function handler(req,res){
         res.status(200).json(user)
     }
     else if(req.method === 'PUT'){
-        console.log('put going off')
+        
         const track = await Track.findOne({trackId: req.body.trackId})
         let createdTrack
         if(track !== null){
             res.status(500).json({message: "Track already requested."})
         }
         if(track === null){
+            console.log(req.body)
              createdTrack = await Track.create({
                 trackId: req.body.trackId,
                 trackArtist: req.body.trackArtist,
                 trackName: req.body.trackName,
                 albumArtUrl: req.body.albumArtUrl,
                 status:'pending',
-                uri: req.body.uri
+                uri: req.body.uri,
+                requesterName: req.body.requesterName
             })
             console.log(createdTrack)
             res.status(200).json(createdTrack)

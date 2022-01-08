@@ -7,7 +7,6 @@ import SpotifySearch from "../components/spotify/SpotifySearch";
 import SpotifyUserPanel from "../components/spotify/SpotifyUserPanel";
 import SpotifyAdminPanel from "../components/spotify/SpotifyAdminPanel";
 import Message from "../components/Message";
-import {FaSpotify} from 'react-icons/fa'
 import Tabs from "../components/spotify/Tabs";
 import {motion} from 'framer-motion';
 
@@ -15,7 +14,6 @@ import {motion} from 'framer-motion';
 function Spotify() {
     const {data: session} = useSession()
     const [playlist, setPlaylist] = useState()
-    const [userTracks, setUserTracks] = useState([])
     const [message, setMessage] = useState()
     const [user, setUser] = useState()
     
@@ -26,7 +24,6 @@ function Spotify() {
         }
         const getUserTracks = async () => {
             const {data} = await axios.get('/api/spotify/users')
-            setUserTracks(data.tracks)
             setUser(data)
         }
         getPlaylists()
@@ -39,14 +36,17 @@ function Spotify() {
     
     const requestTrackHandler = async (track) =>{
             
-            const trackInfo = {
-            trackArtist : track.artists[0].name,
-            trackName : track.name,
-            trackId : track.id,
-            albumArtUrl : track.album.images[0].url,
-            uri: track.uri
-            }
             try{
+
+                const trackInfo = {
+                    trackArtist : track.artists[0].name,
+                    trackName : track.name,
+                    trackId : track.id,
+                    albumArtUrl : track.album.images[0].url,
+                    uri: track.uri,
+                    requesterName: track.requesterName,
+                }
+                console.log(trackInfo)
                 const {data} = await axios.put('/api/spotify/users', trackInfo)
                 
                 setUserTracks(data)
@@ -60,13 +60,9 @@ function Spotify() {
                console.log(error.response.data.message)
                setMessage({text: error.response.data.message, type: 'error'})
             }
-            
-            
-        
     }
 
     
-
     return (
         <>
         {playlist &&
@@ -99,7 +95,7 @@ function Spotify() {
                         user.isAdmin && 
                             <section className='max-h-full flex-1 p-3 bg-gray-900'>
                                 <SpotifyAdminPanel setMessage={setMessage}/>
-                                {/* TODO - Create panel to show all accepted songs in databasemaybe a panel to view all users */}
+                        
                             </section>
                             
                         }

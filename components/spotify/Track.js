@@ -1,6 +1,8 @@
+import { useSession } from 'next-auth/react'
 import React from 'react'
 
 const Track = ({track, requestTrackHandler, acceptTrackHandler, rejectTrackHandler}) => {
+    const {data: session} = useSession()
     let textColor 
     if(track.status === undefined)
         textColor = 'text-white'
@@ -9,7 +11,6 @@ const Track = ({track, requestTrackHandler, acceptTrackHandler, rejectTrackHandl
     else if(track.status === 'accepted')
         textColor = 'text-green-500'
     else textColor = 'text-red-500'
-
     return (
         <div className='flex bg-gray-800 text-white p-3' >
 
@@ -24,6 +25,11 @@ const Track = ({track, requestTrackHandler, acceptTrackHandler, rejectTrackHandl
                         <div className={textColor}>
                             {track.artists[0].name}
                         </div>
+                        {session !== null &&
+                        <div>
+                            {track.requesterName}
+                        </div>
+                        }
                     </div>
                 </div>
                 {track.status &&

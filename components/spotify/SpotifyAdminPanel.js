@@ -60,7 +60,8 @@ const SpotifyAdminPanel = ({setMessage}) => {
                                     name: track.trackName,
                                     artists:[{name: track.trackArtist}],
                                     status: track.status,
-                                    uri: track.uri
+                                    uri: track.uri,
+                                    requesterName: track.requesterName
                                     }
                                 } 
                                 key={track.trackId} 
