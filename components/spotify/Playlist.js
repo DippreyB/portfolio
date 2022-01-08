@@ -1,5 +1,5 @@
-import React from 'react'
-import { useState } from 'react/cjs/react.development'
+import React, {useState} from 'react'
+
 import Track from './Track'
 import {FaArrowUp, FaCentercode} from 'react-icons/fa'
 import { motion } from 'framer-motion'

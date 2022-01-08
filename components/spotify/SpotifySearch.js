@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import Playlist from './Playlist'
 import Track from './Track'
 import { FaCheckCircle} from 'react-icons/fa'
 
