@@ -32,7 +32,6 @@ function Spotify() {
         }
 
     },[session])
-
     
     const requestTrackHandler = async (track) =>{
             
@@ -44,12 +43,11 @@ function Spotify() {
                     trackId : track.id,
                     albumArtUrl : track.album.images[0].url,
                     uri: track.uri,
-                    requesterName: track.requesterName,
+                    requesterName: user.name,
                 }
                 console.log(trackInfo)
                 const {data} = await axios.put('/api/spotify/users', trackInfo)
                 
-                setUserTracks(data)
                 if(data){
                     setMessage({
                         text: `${trackInfo.trackName} successfully requested!`,
@@ -89,6 +87,7 @@ function Spotify() {
                             }
                         </section>
                         <section className='max-h-full flex-1 p-3 bg-gray-900'>
+
                             <SpotifySearch requestTrackHandler={requestTrackHandler}/>
                         </section>
                         {user &&
@@ -99,11 +98,11 @@ function Spotify() {
                             </section>
                             
                         }
-                        {user && !user.isAdmin &&
+                        {/* {user && !user.isAdmin &&
                             <section className='max-h-full flex-1 p-3 bg-gray-900'>
                                 <SpotifyUserPanel userTracks={userTracks}/>
                             </section>
-                        }
+                        } */}
                         
                         
                         

@@ -19,12 +19,13 @@ export default async function handler(req,res){
     
     if(req.method === "GET"){
         if(user === null){
+            console.log(user)
             const createdUser = await User.create({
                 "name": name,
                 "email": email,
                 "isAdmin": false,
-                "tracks": []
             })
+            
         res.status(200).json(createdUser)
         }
         res.status(200).json(user)

@@ -1,13 +1,12 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Track from './Track'
-import { FaCheckCircle} from 'react-icons/fa'
+import { useSession, signIn } from 'next-auth/react'
 
 const SpotifySearch = ({requestTrackHandler}) => {
     const [search, setSearch] = useState()
     const [searchResults, setSearchResults] = useState()
-    const [requesterName, setRequesterName] = useState()
-    const [submitName, setSubmitName] = useState()
+    const {data: session} = useSession()
 
     useEffect(() => {
         const getSearchResults = async () => {
@@ -23,9 +22,11 @@ const SpotifySearch = ({requestTrackHandler}) => {
     
    
     return (
-        <div className='flex flex-col h-full max-h-screen'>
+        <div className='flex flex-col h-full max-h-screen justify-center'>
 
-            {submitName &&
+            {!session && <button onClick={signIn}>Sign In to Request</button>}
+
+            {session &&
             <>
                 <div className='p-5 text-4xl text-white hidden md:block'><h1>Search</h1></div>
                 <input 
@@ -40,7 +41,7 @@ const SpotifySearch = ({requestTrackHandler}) => {
                         <div className='flex flex-col mt-3 scrollbar-thin scrollbar-thumb-gray-600'>
                             {searchResults.tracks.items.map(track=>{
                                 return (
-                                    <Track requestTrackHandler={requestTrackHandler} track={{requesterName: submitName, ...track}} key={track.id} >
+                                    <Track requestTrackHandler={requestTrackHandler} track={{...track}} key={track.id} >
                                         
                                     </Track>
                                 )
@@ -51,20 +52,6 @@ const SpotifySearch = ({requestTrackHandler}) => {
             </>
             }
 
-            {!submitName && 
-            <>
-                <div className='p-5 text-4xl text-white hidden md:block'><h1>Enter your name</h1></div>
-                <div className='flex'>
-                    <input 
-                            type='text' 
-                            placeholder='Enter your name to search' 
-                            className='p-3 rounded flex-1 rounded-r-none'
-                            onChange={(e)=>setRequesterName(e.target.value)}
-                    />
-                    <button className='bg-gray-800 text-white rounded-r-sm pl-6 pr-6' onClick={()=>setSubmitName(requesterName)}><FaCheckCircle /></button>
-                </div>
-            </>
-            }
         </div>
     )
 }

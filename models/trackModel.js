@@ -4,7 +4,8 @@ const trackSchema = mongoose.Schema({
     trackId: {
         type: String,
         required: true,
-        unique: true,
+        sparse: true,
+        unique: false
     },
     trackName: {
         type: String,
