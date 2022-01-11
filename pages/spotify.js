@@ -67,9 +67,9 @@ function Spotify() {
             <main className='bg-gray-900 h-screen'>
                 <Nav dark={true}>
                 {session === null?
-                        <a onClick={() => signIn()} >Sign In</a> 
+                        <a className="cursor-pointer" onClick={() => signIn('spotify')} >Sign In</a> 
                         :
-                        <a  onClick={()=> signOut()} >Sign Out</a>
+                        <a className="cursor-pointer"  onClick={()=> signOut()} >Sign Out</a>
                     }
                 </Nav>
                 {message &&

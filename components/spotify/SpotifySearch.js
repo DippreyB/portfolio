@@ -24,7 +24,9 @@ const SpotifySearch = ({requestTrackHandler}) => {
     return (
         <div className='flex flex-col h-full max-h-screen justify-center'>
 
-            {!session && <button onClick={signIn}>Sign In to Request</button>}
+            {!session && 
+                <button className='p-6 border-green-400 border-2 text-white hover:text-green-400' onClick={() => signIn('google')}>Sign In to Google</button>
+            }
 
             {session &&
             <>
