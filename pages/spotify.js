@@ -4,17 +4,16 @@ import axios from "axios";
 import Nav from "../components/Nav";
 import Playlist from "../components/spotify/Playlist";
 import SpotifySearch from "../components/spotify/SpotifySearch";
-import SpotifyUserPanel from "../components/spotify/SpotifyUserPanel";
 import SpotifyAdminPanel from "../components/spotify/SpotifyAdminPanel";
-import Message from "../components/Message";
 import Tabs from "../components/spotify/Tabs";
 import {motion} from 'framer-motion';
+import {Toaster, toast} from 'react-hot-toast'
+
 
 
 function Spotify() {
     const {data: session} = useSession()
     const [playlist, setPlaylist] = useState()
-    const [message, setMessage] = useState()
     const [user, setUser] = useState()
     
     useEffect(() => {
@@ -46,17 +45,16 @@ function Spotify() {
                     requesterName: user.name,
                 }
                 console.log(trackInfo)
-                const {data} = await axios.put('/api/spotify/users', trackInfo)
-                
-                if(data){
-                    setMessage({
-                        text: `${trackInfo.trackName} successfully requested!`,
-                        type: 'success'
-                    })
-                }
+                const {data} = await toast.promise( axios.put('/api/spotify/users', trackInfo), 
+                    {
+                        loading:"Requesting...",
+                        success:"Track requested!",
+                        error:"Unable to request track."
+                    }
+                )
+                console.log('Track requested: ', data)
             }catch(error){
                console.log(error.response.data.message)
-               setMessage({text: error.response.data.message, type: 'error'})
             }
     }
 
@@ -64,7 +62,9 @@ function Spotify() {
     return (
         <>
         {playlist &&
+
             <main className='bg-gray-900 h-screen'>
+                <Toaster />
                 <Nav dark={true}>
                 {session === null?
                         <a className="cursor-pointer" onClick={() => signIn('spotify')} >Sign In</a> 
@@ -72,13 +72,6 @@ function Spotify() {
                         <a className="cursor-pointer"  onClick={()=> signOut()} >Sign Out</a>
                     }
                 </Nav>
-                {message &&
-                    <Message message={message} setMessage={setMessage}/>
-                }
-                
-                    
-            
-                
                     <section className='flex-1 flex-wrap md:justify-start justify-center max-h-full md:max-h-screen pt-10 bg-gray-900 hidden md:flex'>
                         <>
                         <section className='max-h-full flex-1 p-3 bg-gray-900'>
@@ -93,19 +86,11 @@ function Spotify() {
                         {user &&
                         user.isAdmin && 
                             <section className='max-h-full flex-1 p-3 bg-gray-900'>
-                                <SpotifyAdminPanel setMessage={setMessage}/>
+                                <SpotifyAdminPanel />
                         
                             </section>
                             
                         }
-                        {/* {user && !user.isAdmin &&
-                            <section className='max-h-full flex-1 p-3 bg-gray-900'>
-                                <SpotifyUserPanel userTracks={userTracks}/>
-                            </section>
-                        } */}
-                        
-                        
-                        
                         </>
                         </section>
                     
