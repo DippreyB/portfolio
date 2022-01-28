@@ -7,7 +7,7 @@ import SpotifySearch from "../components/spotify/SpotifySearch";
 import SpotifyAdminPanel from "../components/spotify/SpotifyAdminPanel";
 import Tabs from "../components/spotify/Tabs";
 import {motion} from 'framer-motion';
-import {Toaster, toast} from 'react-hot-toast'
+import {Toaster, toast} from 'react-hot-toast';
 
 
 
@@ -72,6 +72,7 @@ function Spotify() {
                         <a className="cursor-pointer"  onClick={()=> signOut()} >Sign Out</a>
                     }
                 </Nav>
+                   
                     <section className='flex-1 flex-wrap md:justify-start justify-center max-h-full md:max-h-screen pt-10 bg-gray-900 hidden md:flex'>
                         <>
                         <section className='max-h-full flex-1 p-3 bg-gray-900'>

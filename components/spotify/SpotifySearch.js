@@ -2,6 +2,9 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Track from './Track'
 import { useSession, signIn } from 'next-auth/react'
+import Image from 'next/image'
+import drake from '../../public/drake.png'
+import { motion } from 'framer-motion'
 
 const SpotifySearch = ({requestTrackHandler}) => {
     const [search, setSearch] = useState()
@@ -19,7 +22,8 @@ const SpotifySearch = ({requestTrackHandler}) => {
             setSearchResults(undefined)
     },[search])
 
-    
+    const email = session.session.user.email;
+    console.log(process.env.NEXT_PUBLIC_DRAKE_FAN);
    
     return (
         <div className='flex flex-col h-full max-h-screen justify-center'>
@@ -30,7 +34,18 @@ const SpotifySearch = ({requestTrackHandler}) => {
 
             {session &&
             <>
-                <div className='p-5 text-4xl text-white hidden md:block'><h1>Search</h1></div>
+                <div className='p-5 text-4xl text-white hidden md:block'>
+                    <h1 className='flex'>
+                        <div className='flex flex-col justify-center'>Search {email && email === process.env.NEXT_PUBLIC_DRAKE_FAN && <>for</>}</div> 
+
+                        {email && email ===process.env.NEXT_PUBLIC_DRAKE_FAN &&
+                        <motion.div className='ml-10' animate={{rotate: 360}} transition={{repeat: Infinity, repeatType:"loop", duration: 3, ease: 'linear'}}>
+                            <Image src={drake} width={50} height={71} />
+                        </motion.div>
+                        }
+                        
+                    </h1>
+                </div>
                 <input 
                         type='text' 
                         placeholder='Suggest a track' 

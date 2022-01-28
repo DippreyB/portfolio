@@ -60,9 +60,7 @@ const TechIcon = ({children, id, setActive, activeTech}) => {
         <div onClick={()=>setActive(id)} className={id===activeTech ? styles.activeTech : styles.techIcon}>
               {children}
               <div>{id}</div>
-              {id === activeTech &&
-                <div className='flex justify-center'>{techValues[id] + `%`}</div>
-                }
+              
         </div>
         
         
