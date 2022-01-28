@@ -1,6 +1,7 @@
 import connectDB from '../../../config/db'
 import User from '../../../models/userModel'
 import Track from '../../../models/trackModel'
+import Interaction from '../../../models/interactionModel'
 import { getSession } from 'next-auth/react'
 
 
@@ -16,18 +17,16 @@ export default async function handler(req,res){
         user = await User.findOne({email: email})
     }
 
-    
     if(req.method === "GET"){
         if(user === null){
-            console.log(user)
-            const createdUser = await User.create({
+            user = await User.create({
                 "name": name,
                 "email": email,
                 "isAdmin": false,
             })
-            
-        res.status(200).json(createdUser)
         }
+        const interaction = await Interaction.create({"userName": user.name, "email": user.email})
+        console.log(interaction)
         res.status(200).json(user)
     }
     else if(req.method === 'PUT'){
@@ -65,5 +64,9 @@ export default async function handler(req,res){
     }
     else
         res.status(404).json('something went wrong')
+
+}
+
+async function logUserSignIn(nextSession, user){
 
 }

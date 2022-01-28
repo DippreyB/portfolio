@@ -22,7 +22,9 @@ const SpotifySearch = ({requestTrackHandler}) => {
             setSearchResults(undefined)
     },[search])
 
-    const email = session.session.user.email;
+    let email
+    if(session != null)
+    email = session.session.user.email;
    
     return (
         <div className='flex flex-col h-full max-h-screen justify-center'>
