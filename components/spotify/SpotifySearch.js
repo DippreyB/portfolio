@@ -23,7 +23,6 @@ const SpotifySearch = ({requestTrackHandler}) => {
     },[search])
 
     const email = session.session.user.email;
-    console.log(process.env.NEXT_PUBLIC_DRAKE_FAN);
    
     return (
         <div className='flex flex-col h-full max-h-screen justify-center'>
