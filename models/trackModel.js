@@ -4,7 +4,8 @@ const trackSchema = mongoose.Schema({
     trackId: {
         type: String,
         required: true,
-        unique: true,
+        sparse: true,
+        unique: false
     },
     trackName: {
         type: String,
@@ -25,6 +26,9 @@ const trackSchema = mongoose.Schema({
     uri: { 
         type: String,
         required: true
+    },
+    requesterName: {
+        type: String
     }
 })
 

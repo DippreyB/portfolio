@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Track from './Track'
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
+import toast from 'react-hot-toast'
 
 
-const SpotifyAdminPanel = ({setMessage}) => {
+const SpotifyAdminPanel = () => {
     const {data: session} = useSession()
     const [requestedTracks, setRequestedTracks] = useState()
 
@@ -17,20 +18,28 @@ const SpotifyAdminPanel = ({setMessage}) => {
             getRequestedTracks()
     },[session])
 
+    const updateRequestedTracks = async () =>{
+        const {data} = await axios.get('/api/spotify/admin/tracks')
+        setRequestedTracks(data)
+    }
+
     const acceptTrackHandler = async (track) => {
-        const {data} = await axios.put('/api/spotify/admin/tracks',{trackId: track.trackId, status: "accepted"})
-        if(data)
-        setMessage({
-            text: 'Track accepted.',
-            type: 'success'
+        const {data} = await toast.promise(axios.put('/api/spotify/admin/tracks',{trackId: track.trackId, status: "accepted"}), 
+        {
+            loading:"Accepting track...",
+            success:"Track accepted!",
+            error:"Unable to accept track."
         })
+        await updateRequestedTracks()
     }
     const rejectTrackHandler = async (track) => {
-        const {data} = await axios.put('/api/spotify/admin/tracks',{trackId: track.trackId, status: "rejected"})
-        setMessage({
-            text: 'Track rejected.',
-            type: 'success'
+        const {data} = await toast.promise(axios.put('/api/spotify/admin/tracks',{trackId: track.trackId, status: "rejected"}),
+        {
+            loading:"Rejecting track...",
+            success:"Track rejected!",
+            error:"Unable to reject track."
         })
+        await updateRequestedTracks()
     }
     
     return (
@@ -53,7 +62,8 @@ const SpotifyAdminPanel = ({setMessage}) => {
                                     name: track.trackName,
                                     artists:[{name: track.trackArtist}],
                                     status: track.status,
-                                    uri: track.uri
+                                    uri: track.uri,
+                                    requesterName: track.requesterName
                                     }
                                 } 
                                 key={track.trackId} 

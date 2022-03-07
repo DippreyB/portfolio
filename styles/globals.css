@@ -23,3 +23,43 @@ a:hover {
 * {
   box-sizing: border-box;
 }
+
+.slide-in {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: #ccc;
+  transform-origin: left;
+}
+
+.slide-out {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: rgba(17, 24, 39, 1);
+  transform-origin: right;
+}
+
+.slide-in-spotify {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: rgba(17, 24, 39, 1);
+  transform-origin: left;
+}
+
+.slide-out-spotify {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: #ccc;
+  transform-origin: right;
+}

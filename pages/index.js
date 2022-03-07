@@ -7,10 +7,11 @@ import {SiMongodb, SiJavascript, SiNextdotjs, SiCss3, SiJava, SiExpress, SiNoded
 import ProjectCard from '../components/ProjectCard'
 import Tech from '../components/Tech'
 import Nav from '../components/Nav'
+import {motion} from 'framer-motion'
 
-
-export default function Home() {
+function Home() {
   return (
+    <>
     <div className={styles.container}>
       <Head>
         <title>DippreyC</title>
@@ -28,11 +29,9 @@ export default function Home() {
            <section>
            <h1 className={styles.sectionTitle}>Hi, I&apos;m Caine </h1>
            <p className={styles.aboutInfo}>
-             Computer Science educator and webmaster at Hebron High School
+             AP Computer Science teacher and webmaster at Hebron High School
            </p>
-           <p className={styles.aboutInfo}>
-             Aspiring full-stack developer looking for new opportunities
-           </p>
+           
            <p className={styles.aboutInfo}>
              <span>Here&apos;s a few of my favorite <a href='#technologies'>technologies</a></span>
            </p>
@@ -94,5 +93,23 @@ export default function Home() {
      
       
     </div>
+
+    <motion.div
+                className='slide-in'
+                initial={{scaleX: 0}}
+                animate={{scaleX: 0}}
+                exit={{scaleX: 1}}
+                transition={{duration: 1, ease: "easeInOut"}}
+            />
+            <motion.div
+                className='slide-out'
+                initial={{scaleX: 1}}
+                animate={{scaleX: 0}}
+                exit={{scaleX: 0}}
+                transition={{duration: 1, ease: "easeInOut"}}
+            />
+    </>
   )
 }
+
+export default Home
