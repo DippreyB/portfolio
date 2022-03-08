@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 
-export default function qrdle(){
+function qrdle(){
 
     const [guess, setGuess] = useState("");
     const [correct, setCorrect] = useState(false);
@@ -95,4 +95,4 @@ const GuessTile = ({letter, correct}) => {
 
 
 
-
+export default qrdle
